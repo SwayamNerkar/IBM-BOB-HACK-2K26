@@ -1,0 +1,8 @@
+{
+  "_comment": "Demo input for FixFlow AI — no real credentials or sensitive data.",
+  "language": "Python",
+  "error_message": "TypeError: unsupported operand type(s) for +: 'int' and 'str'",
+  "stack_trace": "Traceback (most recent call last):\n  File \"app.py\", line 3, in <module>\n    result = \"Age: \" + age\nTypeError: can only concatenate str (not \"int\") to str",
+  "code_snippet": "# Simple user profile formatter\nage = 25\nresult = \"Age: \" + age\nprint(result)",
+  "expected_behavior": "I expected the output to be: Age: 25"
+}

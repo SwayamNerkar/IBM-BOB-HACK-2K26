@@ -1,0 +1,170 @@
+@import "tailwindcss";
+
+/* ─── Design tokens ───────────────────────────────────────── */
+:root {
+  /* Surfaces */
+  --bg:           #F7F7F5;   /* warm off-white page */
+  --surface:      #FFFFFF;   /* panel/card surface */
+  --surface-dim:  #F2F1EE;   /* slightly recessed surface */
+  --surface-code: #1C1C1C;   /* code editor dark bg */
+
+  /* Borders */
+  --border:       #E5E4DF;   /* default subtle border */
+  --border-strong:#C9C8C2;   /* slightly visible separator */
+
+  /* Text */
+  --text:         #1E1E1E;   /* primary — near black */
+  --text-2:       #5C5C5C;   /* secondary — mid gray */
+  --text-3:       #8A8A8A;   /* tertiary / disabled */
+  --text-inverse: #F7F7F5;   /* on dark surfaces */
+
+  /* Actions */
+  --action:       #1E1E1E;   /* primary button bg */
+  --action-hover: #333333;
+  --action-text:  #F7F7F5;
+
+  /* Semantic */
+  --error:        #B91C1C;
+  --error-bg:     #FEF2F2;
+  --error-border: #FECACA;
+  --warn:         #92400E;
+  --warn-bg:      #FFFBEB;
+  --warn-border:  #FCD34D;
+  --ok:           #166534;
+  --ok-bg:        #F0FDF4;
+  --ok-border:    #BBF7D0;
+  --info-bg:      #F8F8F6;
+
+  /* Code */
+  --code-text:    #E2E8F0;   /* light text on dark code surface */
+  --code-dim:     #6B7280;
+
+  /* Radius */
+  --r-sm: 4px;
+  --r-md: 6px;
+  --r-lg: 8px;
+
+  /* Transition */
+  --t: 120ms ease;
+}
+
+/* ─── Reset ───────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+
+body {
+  font-family: -apple-system, "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+}
+
+/* ─── Typography scale ────────────────────────────────────── */
+.t-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.t-meta {
+  font-size: 12px;
+  color: var(--text-3);
+  line-height: 1.5;
+}
+
+/* ─── Monospace ───────────────────────────────────────────── */
+pre, code, textarea.code-input {
+  font-family: "JetBrains Mono", "Fira Code", "Cascadia Code", ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 12.5px;
+  line-height: 1.65;
+}
+
+/* ─── Focus ring — keyboard accessible ───────────────────── */
+:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 2px;
+  border-radius: var(--r-sm);
+}
+
+/* ─── Form base ───────────────────────────────────────────── */
+textarea, select, input {
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  transition: border-color var(--t), box-shadow var(--t);
+}
+
+textarea:focus, select:focus, input:focus {
+  border-color: var(--border-strong);
+  outline: none;
+}
+
+textarea {
+  resize: vertical;
+  line-height: 1.6;
+}
+
+/* ─── Code editor textarea ────────────────────────────────── */
+textarea.code-input {
+  background: var(--surface-code);
+  color: var(--code-text);
+  border-color: #2A2A2A;
+  caret-color: #E2E8F0;
+  tab-size: 2;
+}
+
+textarea.code-input:focus {
+  border-color: #444444;
+}
+
+/* ─── Highlight.js overrides ──────────────────────────────── */
+.hljs {
+  background: var(--surface-code) !important;
+  color: var(--code-text) !important;
+  padding: 0 !important;
+  border-radius: 0;
+}
+
+/* ─── Scrollbars (code blocks) ────────────────────────────── */
+.code-scroll::-webkit-scrollbar { height: 4px; width: 4px; }
+.code-scroll::-webkit-scrollbar-track { background: transparent; }
+.code-scroll::-webkit-scrollbar-thumb { background: #3A3A3A; border-radius: 2px; }
+
+/* ─── Divider ─────────────────────────────────────────────── */
+.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 0;
+}
+
+/* ─── Reduced motion ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─── Spinner ─────────────────────────────────────────────── */
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+.spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--border-strong);
+  border-top-color: var(--text);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+.fade-in { animation: fadeIn 0.18s ease both; }
