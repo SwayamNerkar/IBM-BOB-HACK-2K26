@@ -78,16 +78,30 @@ def _build_user_message(request: DiagnosisRequest) -> str:
 def _parse_ai_json(raw: str) -> dict[str, Any]:
     """
     Extract JSON from the model response.
-    Models sometimes wrap JSON in markdown fences — strip them first.
+    Handles:
+    - Markdown code fences (```json ... ```)
+    - Qwen/reasoning model <think>...</think> prefixes
+    - Leading/trailing whitespace
     """
+    import re as _re
     text = raw.strip()
+
+    # Strip <think>...</think> blocks (Qwen reasoning models)
+    text = _re.sub(r"<think>.*?</think>", "", text, flags=_re.DOTALL).strip()
+
+    # Strip markdown code fences
     if text.startswith("```"):
-        # Strip leading ``` line and trailing ``` line
         lines = text.splitlines()
         text = "\n".join(
             line for line in lines
             if not line.strip().startswith("```")
         ).strip()
+
+    # If there's still preamble before the JSON object, find the first {
+    brace = text.find("{")
+    if brace > 0:
+        text = text[brace:]
+
     return json.loads(text)
 
 
